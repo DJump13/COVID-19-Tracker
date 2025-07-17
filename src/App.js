@@ -1,13 +1,10 @@
 import './App.css';
 import { useEffect, useState } from "react";
-import{
-  MenuItem,
-  FormControl,
-  Select
-} from "@mui/material"
+import{ MenuItem, FormControl, Select } from "@mui/material"
 
 function App() {
   const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState('worldwide');
 
   //State = how to write a variable in REACT
   //https://disease.sh/v3/covid-19/countries
@@ -34,27 +31,24 @@ function App() {
     getCountriesData();
   }, []);
 
+  const onCountryChange = (event) => {
+    const countryCode = event.target.value;
+
+    setCountry(countryCode);
+  }
+
   return (
     <div className="app">
       <div className="app__header">
         <h1>COVID-19 TRACKER</h1>
         <FormControl className="app__dropdown">
-          <Select
-            variant="outlined"
-            value="abc">
-              {/* Loop through all the countries and show a dropdown 
-              list of the options */}
-
+          <Select variant="outlined" onChange={onCountryChange} value={country}>
+              <MenuItem value="worldwide">Worldwide</MenuItem>
               {
                 countries.map(country => (
                   <MenuItem value={country.value}>{country.name}</MenuItem>
                 ))
               }
-
-              {/* <MenuItem value="worldwide">Worldwide</MenuItem>
-              <MenuItem value="worldwide">Option two</MenuItem>
-              <MenuItem value="worldwide">Option 3</MenuItem>
-              <MenuItem value="worldwide">YOOOOO</MenuItem> */}
           </Select>
         </FormControl>
       </div>
